@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My smart home</title>
+    <link rel="shortcut icon" href="./favicon.ico">
+    <link href="//unpkg.com/layui@2.7.6/dist/css/layui.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+</head>
+<body class="bg">
+<div style="margin: 30px;">
+    <div class="glass-card">
+        <a href="./index.html"><h1 style="padding: 10px; color:#fff;">My smart home</h1></a>
+        <a href="https://www.github.com/wwwanghua" target="_blank"><small style="color: #fff;">by 王华</small></a>
+    </div>
+    <div style="margin-top: 20px;" class="glass-card">
+        <span id="d_state" class="layui-badge-dot layui-bg-orange"></span><small id="d_content" style="color: #fff;">&nbsp;连接中</small>
+    </div>
+    <div class="layui-row glass-card" style="margin-top: 20px;">
+        <a href="javascript: void(0)"><button id="_temp" type="button" class="button" style="border: 6px solid orange;">温度<br><span id="temp" style="color: #FFB800; font-size: 25px;">00°C</span></button></a>
+        <a href="javascript: void(0)"><button id="_humi" type="button" class="button" style="border: 6px solid orange;">湿度<br><span id="humi" style="color: #31BDEC; font-size: 25px;">00%</span></button></a>
+    </div>
+    <a href="javascript: void(0)" onclick="led()">
+        <div class="layui-row glass-card" style="margin-top: 20px;">
+            <svg id="_off" t="1669783127299" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="16388" width="32" height="32"><path d="M575.1808 829.1328c17.5616 0 31.8208 14.1312 31.8208 31.5904 0 16.1024-12.16 29.4144-28.0064 31.3344l-3.2 0.256h-125.6704a31.6928 31.6928 0 0 1-31.7952-31.5904c0-16.128 12.1344-29.44 27.904-31.36l3.8912-0.256h125.056z m34.2016-71.0656c17.5616 0 31.7952 14.1312 31.7952 31.5904 0 16.128-12.1344 29.44-27.9808 31.36l-3.2 0.2304h-195.3792a31.6928 31.6928 0 0 1-31.7952-31.5904c0-16.1024 12.1344-29.44 27.9808-31.3344l3.2-0.256h195.3792zM512 131.712c164.864 0 298.5216 132.5056 298.5216 296.0128 0 97.8176-48.2048 187.4944-127.1808 242.432l-5.0688 3.4048-6.4512 29.696a57.088 57.088 0 0 1-50.7136 44.4416l-4.4032 0.256h-209.792a57.1392 57.1392 0 0 1-55.1168-41.4976l-0.9984-4.1472-5.12-24.4736-1.2032-5.0944-5.2992-3.6096a295.04 295.04 0 0 1-125.184-223.8208l-0.384-8.7808-0.128-8.8064C213.4784 264.2176 347.136 131.712 512 131.712z m0 63.1552c-129.7664 0-234.9312 104.2688-234.9312 232.8576a231.7824 231.7824 0 0 0 96.0768 187.8528l6.528 4.608 1.9712 1.28c10.6496 7.0656 15.4368 13.0048 20.4544 23.9616 0.896 1.9456 1.6896 3.968 2.3552 6.016l1.536 5.1968 1.3824 5.632 2.56 11.8784 2.176 10.5984h198.656l5.8112-26.624 4.2752-20.352 2.7648-4.0448 17.4848-11.4176c66.0736-43.1872 105.8304-115.8656 105.8304-194.56 0-128.6144-105.1648-232.8832-234.9312-232.8832z m-54.3232 49.7408a31.7952 31.7952 0 0 1 37.12 25.2416c3.2 17.152-8.192 33.664-25.4464 36.864-56.96 10.5216-83.0208 44.544-86.784 112.4608a31.744 31.744 0 0 1-33.536 29.7984 31.6672 31.6672 0 0 1-30.0032-33.28c5.376-96.3584 51.584-154.9824 138.6496-171.0848z" p-id="16389" fill="#ffffff"></path></svg>
+            <svg id="_on" style="display: none;" t="1669783127299" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="16388" width="32" height="32"><path d="M575.1808 829.1328c17.5616 0 31.8208 14.1312 31.8208 31.5904 0 16.1024-12.16 29.4144-28.0064 31.3344l-3.2 0.256h-125.6704a31.6928 31.6928 0 0 1-31.7952-31.5904c0-16.128 12.1344-29.44 27.904-31.36l3.8912-0.256h125.056z m34.2016-71.0656c17.5616 0 31.7952 14.1312 31.7952 31.5904 0 16.128-12.1344 29.44-27.9808 31.36l-3.2 0.2304h-195.3792a31.6928 31.6928 0 0 1-31.7952-31.5904c0-16.1024 12.1344-29.44 27.9808-31.3344l3.2-0.256h195.3792zM512 131.712c164.864 0 298.5216 132.5056 298.5216 296.0128 0 97.8176-48.2048 187.4944-127.1808 242.432l-5.0688 3.4048-6.4512 29.696a57.088 57.088 0 0 1-50.7136 44.4416l-4.4032 0.256h-209.792a57.1392 57.1392 0 0 1-55.1168-41.4976l-0.9984-4.1472-5.12-24.4736-1.2032-5.0944-5.2992-3.6096a295.04 295.04 0 0 1-125.184-223.8208l-0.384-8.7808-0.128-8.8064C213.4784 264.2176 347.136 131.712 512 131.712z m0 63.1552c-129.7664 0-234.9312 104.2688-234.9312 232.8576a231.7824 231.7824 0 0 0 96.0768 187.8528l6.528 4.608 1.9712 1.28c10.6496 7.0656 15.4368 13.0048 20.4544 23.9616 0.896 1.9456 1.6896 3.968 2.3552 6.016l1.536 5.1968 1.3824 5.632 2.56 11.8784 2.176 10.5984h198.656l5.8112-26.624 4.2752-20.352 2.7648-4.0448 17.4848-11.4176c66.0736-43.1872 105.8304-115.8656 105.8304-194.56 0-128.6144-105.1648-232.8832-234.9312-232.8832z m-54.3232 49.7408a31.7952 31.7952 0 0 1 37.12 25.2416c3.2 17.152-8.192 33.664-25.4464 36.864-56.96 10.5216-83.0208 44.544-86.784 112.4608a31.744 31.744 0 0 1-33.536 29.7984 31.6672 31.6672 0 0 1-30.0032-33.28c5.376-96.3584 51.584-154.9824 138.6496-171.0848z" p-id="16389" fill="#f4ea2a"></path></svg>
+        </div>
+    </a>
+    <div style="margin-top: 20px;">
+        <small style="color: #fff;">温馨提示：</small><small id="tips_temp" style="color: #fff;">正在连接服务器。</small><small id="tips_humi" style="color: #fff;"></small>
+    </div>
+</div>
+<script src="//unpkg.com/layui@2.7.6/dist/layui.js"></script>
+<script src="./js/mqttws31.js"></script>
+<script>
+    layer.msg('Welcome to my smart home')
+
+    // LED开关状态
+    var state = 0
+
+    // 设备在线状态
+    var _state = 0
+    setInterval(function() {
+        _state++
+        if (_state > 10) {
+            document.getElementById('d_state').className = 'layui-badge-dot'
+            document.getElementById('d_content').innerHTML = '&nbsp;离线'
+            document.getElementById('_temp').style = 'border: 6px solid red'
+            document.getElementById('_humi').style = 'border: 6px solid red'
+            document.getElementById('temp').innerText = '00°C'
+            document.getElementById('humi').innerText = '00%'
+            document.getElementById('tips_temp').innerText = ''
+            document.getElementById('tips_humi').innerText = '设备离线，请接通设备电源。'
+        }
+    }, 1000)
+
+    // 设备ID
+    var device_id
+
+    // 设备发布检测
+    var topic_num = 0
+
+    // 使用 Paho MQTT （EMQX Public Server）
+    const clientID = Math.round(Math.random() * 80 + 20)
+    var client = new Paho.MQTT.Client('broker.emqx.io', Number(8083), 'My-smart-home' + clientID)
+
+    // 设置回调处理程序
+    client.onConnectionLost = onConnectionLost // 重新连接
+    client.onMessageArrived = onMessageArrived // 接收消息
+
+    // 建立 MQTT 连接
+    client.connect({onSuccess: onConnect})
+
+    // 客户端连接时调用
+    function onConnect() {
+        console.log('连接成功')
+        document.getElementById('d_state').className = 'layui-badge-dot layui-bg-orange'
+        document.getElementById('d_content').innerHTML = '&nbsp;连接成功'
+        document.getElementById('tips_temp').innerText = ''
+        document.getElementById('tips_humi').innerText = '已成功连接服务器。'
+        // 订阅主题
+        client.subscribe('wanghua/my/smart/home')
+    }
+
+    // 当客户端失去连接时调用
+    function onConnectionLost(responseObject) {
+        if (responseObject.errorCode !== 0) {
+            console.log('连接丢失: ' + responseObject.errorMessage)
+            document.getElementById('d_state').className = 'layui-badge-dot'
+            document.getElementById('d_content').innerHTML = '&nbsp;连接丢失'
+            document.getElementById('_temp').style = 'border: 6px solid red'
+            document.getElementById('_humi').style = 'border: 6px solid red'
+            //document.getElementById('temp').innerText = '00°C'
+            //document.getElementById('humi').innerText = '00%'
+            document.getElementById('tips_temp').innerText = ''
+            document.getElementById('tips_humi').innerText = '连接丢失，请尝试刷新页面。'
+        }
+    }
+
+    // 消息到达时调用
+    function onMessageArrived(message) {
+        const data = JSON.parse(message.payloadString)
+        console.log(data)
+        state = data.led_state
+        _state = 0
+        device_id = data.device_id
+        topic_num++
+        if (topic_num > 1) {
+            document.getElementById('d_state').className = 'layui-badge-dot layui-bg-gray'
+            document.getElementById('d_content').innerHTML = '&nbsp;在线'
+            document.getElementById('temp').innerText = data.temperature + '°C'
+            document.getElementById('humi').innerText = data.humidity + '%'
+            document.getElementById('_temp').style = 'border: 6px solid aquamarine'
+            document.getElementById('_humi').style = 'border: 6px solid aquamarine'
+            if (Number(data.temperature) < 22) {
+                document.getElementById('tips_temp').innerText = '温度过低，建议打开空调或取暖器，'
+            } else if (Number(data.temperature) > 26) {
+                document.getElementById('tips_temp').innerText = '温度过高，建议打开窗户通风，'
+            } else {
+                document.getElementById('tips_temp').innerText = '温度适宜，'
+            }
+            if (Number(data.humidity) < 50) {
+                document.getElementById('tips_humi').innerText = '湿度过低，建议打开加湿器。'
+            } else if (Number(data.humidity) > 60) {
+                document.getElementById('tips_humi').innerText = '湿度过高，建议打开空调或窗户通风。'
+            } else {
+                document.getElementById('tips_temp').innerText = '湿度适宜，Have a nice day！'
+            }
+            if (state == '1') {
+                document.getElementById('_on').style.display = 'inline'
+                document.getElementById('_off').style.display = 'none'
+            } else {
+                document.getElementById('_on').style.display = 'none'
+                document.getElementById('_off').style.display = 'inline'
+            }
+        }
+    }
+
+    // 开关LED
+    function led() {
+        message = new Paho.MQTT.Message('0')
+        message.destinationName = 'wanghua/my/smart/home/control' // 主题
+        client.send(message)
+        if (state == '1') {
+            document.getElementById('_on').style.display = 'none'
+            document.getElementById('_off').style.display = 'inline'
+            layer.msg('灯泡已关闭')
+        } else {
+            document.getElementById('_on').style.display = 'inline'
+            document.getElementById('_off').style.display = 'none'
+            layer.msg('灯泡已打开')
+        }
+    }
+</script>
+</body>
+</html>

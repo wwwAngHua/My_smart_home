@@ -1,0 +1,43 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.bg {
+    text-align: center;
+    background-image: url(../images/background.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: 0% 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.button {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    font-weight: 100;
+    color: #fff;
+    margin: 20px;
+    position: relative;
+    border: 6px solid aquamarine;
+    background: rgba(255, 255, 255, 0.3);
+    font-size: 20px;
+    border-radius: 50%;
+}
+.glass-card {
+    background: white;
+    background: linear-gradient(to right bottom,rgba(255, 255, 255, 0.4),rgba(255, 255, 255, 0.2));
+    backdrop-filter: blur(1rem);
+    width: 100%;
+    height: 60%;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5rem;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.2);
+}
